@@ -12,12 +12,13 @@ def two_moons(num_samples,moon_radius,moon_var):
         X[i + num_samples//2, 1] = r*np.sin(t + np.pi)
 
     X += np.sqrt(moon_var) * np.random.randn(num_samples, 2)
-    Y = np.concatenate((np.zeros((num_samples//2,1)),np.ones((num_samples//2,1))))
+    Y = np.concatenate((np.zeros(num_samples//2, dtype=int),np.ones(num_samples//2, dtype=int)))
 
-    return X,np.array(Y)
+    return X,Y
 
-X,Y = two_moons(1000,1,1e-2)
-print(X.shape,Y.shape)
-plt.scatter(X[:,0],X[:,1],c=Y)
-plt.show()
+if __name__ == '__main__':
+    X,Y = two_moons(1000,1,1e-2)
+    print(X.shape,Y.shape)
+    plt.scatter(X[:,0],X[:,1],c=Y)
+    plt.show()
 

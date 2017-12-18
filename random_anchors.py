@@ -14,6 +14,6 @@ def random_anchors(X,nb_anchors):
     Z = kernel_weights(X,anchors,lambda X,Y: gaussian_kernel(X,Y,1))
     return anchors,Z
 
-
-X = np.array([[0, 0], [1,0], [0,1], [1,1]])
-print(random_anchors(X,2))
+if __name__ == '__main__':
+    X = np.array([[0, 0], [1,0], [0,1], [1,1]])
+    print(random_anchors(X,2))
