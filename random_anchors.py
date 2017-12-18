@@ -12,7 +12,7 @@ def kernel_weights(X,anchors,ker):
 def random_anchors(X,nb_anchors):
     anchors = [X[i,:] for i in np.random.choice(range(nb_anchors),nb_anchors,replace=False)]
     Z = kernel_weights(X,anchors,lambda X,Y: gaussian_kernel(X,Y,1))
-    return anchors,Z
+    return np.array(anchors),np.array(Z)
 
 if __name__ == '__main__':
     X = np.array([[0, 0], [1,0], [0,1], [1,1]])
