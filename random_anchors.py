@@ -7,7 +7,7 @@ def gaussian_kernel(X,Y,sigma):
 
 def kernel_weights(X,anchors,ker):
     Z = ker(X,anchors)
-    return np.array([l / sum(l) for l in Z])
+    return Z/np.transpose(np.sum(Z, 1)[np.newaxis])
 
 def random_anchors(X,nb_anchors):
     anchors = [X[i,:] for i in np.random.choice(range(nb_anchors),nb_anchors,replace=False)]

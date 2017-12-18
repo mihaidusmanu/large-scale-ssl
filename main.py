@@ -15,6 +15,7 @@ Y = np.zeros((num_labeled, K))
 for id, real_id in enumerate(labeled):
     Y[id, ground_truth[real_id]] = 1
 pred = anchors_SSL.predict(0.040, Z, labeled, Y)
+print(pred)
 plt.scatter(X[:, 0], X[:, 1], c = pred)
 plt.show()
 print(util.accuracy(ground_truth, pred))

@@ -8,7 +8,6 @@ def predict(gamma, Z, labeled, Y):
     Z_l = Z[labeled, :]
     
     A = np.dot(np.linalg.inv(np.dot(np.transpose(Z_l), Z_l) + gamma * L), np.dot(np.transpose(Z_l), Y))
-    print(A)
 
     N = Z.shape[0]
     K = Y.shape[1]
@@ -20,6 +19,4 @@ def predict(gamma, Z, labeled, Y):
     
     pred[labeled, :] = Y
     
-    print(pred)
-
     return np.argmax(pred, axis=1)
