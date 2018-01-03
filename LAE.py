@@ -17,17 +17,17 @@ def simplex_proj(z):
 
 def LAE(X,U):
     n = X.shape[0]
-    s = U.shape[1]
-    k = 10
+    d = U.shape[1]
+    s = 10
     Z = np.zeros((n,U.shape[0],1))
     eps = 1e-3
     for i in range(n):
-        i_nn = knn(X[i,0],U,k)
+        i_nn = knn(X[i,0],U,s)
         g = lambda z: np.linalg.norm(X[i,:] - np.dot(np.transpose(U[i_nn,:]),z))**2/2
         grad_g = lambda z: np.transpose((np.squeeze(np.dot(U[i_nn,:],np.dot(np.transpose(U[i_nn,:]),z))) - np.dot(U[i_nn,:],X[i,:]))[np.newaxis])
         g_tild = lambda beta,v,z: g(v) + np.dot(np.transpose(grad_g(v)),z-v) + beta * np.linalg.norm(z-v)**2 / 2
-        old_z_seq = np.ones((k,1))/s
-        z_seq = np.ones((k,1))/s
+        old_z_seq = np.ones((s,1))/s
+        z_seq = np.ones((s,1))/s
         old_delta_seq = 0
         delta_seq = 1
         beta_seq = 1
@@ -56,5 +56,4 @@ def LAE(X,U):
 def find(X, nb_anchors):
   anchors, _ = kmeans_anchors.find(X, nb_anchors, 1)
   Z = LAE(X, anchors)
-  print(Z[:5,:,0])
   return anchors, np.squeeze(Z)
