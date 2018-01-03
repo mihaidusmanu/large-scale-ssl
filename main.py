@@ -15,13 +15,13 @@ X, ground_truth = two_moons(1000, 1, 1e-2)
 
 #anchors, Z = random_anchors.find(X, 100, 1)
 
-#anchors, Z = kmeans_anchors.find(X, 10, 1)
+anchors, Z = kmeans_anchors.find(X, 100, 1)
 
 #anchors, Z = fuzzy_cmeans_anchors.find(X, 10, 1.1)
 
-anchors, Z = LAE.find(X, 10)
+anchors, Z = LAE.find(X, 100)
 
-num_labeled = 10
+num_labeled = 500
 labeled = np.random.choice(range(X.shape[0]), num_labeled, replace = False)
 Y = np.zeros((num_labeled, K))
 for id, real_id in enumerate(labeled):

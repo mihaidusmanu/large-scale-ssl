@@ -19,8 +19,8 @@ def LAE(X,U):
     n = X.shape[0]
     s = U.shape[1]
     k = 10
-    Z = np.zeros((n,k,1))
-    eps = 1e-2
+    Z = np.zeros((n,U.shape[0],1))
+    eps = 1e-3
     for i in range(n):
         i_nn = knn(X[i,0],U,k)
         g = lambda z: np.linalg.norm(X[i,:] - np.dot(np.transpose(U[i_nn,:]),z))**2/2
@@ -50,10 +50,11 @@ def LAE(X,U):
                 j += 1
             old_delta_seq = delta_seq
             delta_seq = (1 + np.sqrt(1 + 4*delta_seq**2))/2
-        Z[i,:] = z_seq
+        Z[i,i_nn] = z_seq
     return Z
 
 def find(X, nb_anchors):
   anchors, _ = kmeans_anchors.find(X, nb_anchors, 1)
   Z = LAE(X, anchors)
+  print(Z[:5,:,0])
   return anchors, np.squeeze(Z)
