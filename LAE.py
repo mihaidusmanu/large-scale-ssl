@@ -15,10 +15,8 @@ def simplex_proj(z):
     theta = 1/(rho+1) * (sum(v[:rho+1]) - 1)
     return np.maximum(z-theta,np.zeros(z.shape))
 
-def LAE(X,U):
+def LAE(X,U,s):
     n = X.shape[0]
-    d = U.shape[1]
-    s = 10
     Z = np.zeros((n,U.shape[0],1))
     eps = 1e-3
     for i in range(n):
@@ -51,9 +49,9 @@ def LAE(X,U):
             old_delta_seq = delta_seq
             delta_seq = (1 + np.sqrt(1 + 4*delta_seq**2))/2
         Z[i,i_nn] = z_seq
-    return Z
+    return np.squeeze(Z)
 
-def find(X, nb_anchors):
+def find(X, nb_anchors, s):
   anchors, _ = kmeans_anchors.find(X, nb_anchors, 1)
-  Z = LAE(X, anchors)
-  return anchors, np.squeeze(Z)
+  Z = LAE(X, anchors, s)
+  return anchors, Z
