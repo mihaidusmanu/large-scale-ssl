@@ -4,15 +4,23 @@ import matplotlib.pyplot as plt
 import anchors_SSL
 import fuzzy_cmeans_anchors
 import kmeans_anchors
+import LAE
 import random_anchors
-from two_moons import two_moons
 import util
+
+from two_moons import two_moons
 
 K = 2
 X, ground_truth = two_moons(1000, 1, 1e-2)
+
 #anchors, Z = random_anchors.find(X, 100, 1)
+
 #anchors, Z = kmeans_anchors.find(X, 10, 1)
-anchors, Z = fuzzy_cmeans_anchors.find(X, 10, 1.1)
+
+#anchors, Z = fuzzy_cmeans_anchors.find(X, 10, 1.1)
+
+anchors, Z = LAE.find(X, 10)
+
 num_labeled = 10
 labeled = np.random.choice(range(X.shape[0]), num_labeled, replace = False)
 Y = np.zeros((num_labeled, K))

@@ -1,6 +1,7 @@
 import numpy as np
+import kmeans_anchors
+
 from two_moons import two_moons
-import random_anchors
 
 def knn(x,U,k):
     dist = np.array([np.linalg.norm(U[i,:] - x) for i in range(U.shape[0])])
@@ -14,7 +15,7 @@ def simplex_proj(z):
     theta = 1/(rho+1) * (sum(v[:rho]) - 1)
     return np.maximum(z-theta,np.zeros(z.shape))
 
-def LAE(X,U,s):
+def LAE(X,U):
     n = X.shape[0]
     s = U.shape[1]
     k = 10
@@ -51,9 +52,7 @@ def LAE(X,U,s):
         Z[i,:] = z_seq
     return Z
 
-
-
-if __name__ == "__main__":
-    X, Y = two_moons(1000,1,1e-2)
-    anchors,Z = random_anchors.find(X,100,1)
-    LAE(X,anchors,1)
+def find(X, nb_anchors):
+  anchors, _ = kmeans_anchors.find(X, nb_anchors, 1)
+  Z = LAE(X, anchors)
+  return anchors, Z
