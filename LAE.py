@@ -10,9 +10,9 @@ def knn(x,U,k):
 def simplex_proj(z):
     s = z.shape[0]
     v = np.sort(z,axis=0)[::-1]
-    l = [v[j] - 1/(j+1) * (sum(v[:j])-1) for j in range(s)]
+    l = [v[j] - 1/(j+1) * (sum(v[:j+1])-1) for j in range(s)]
     rho = max(j if l[j] > 0 else 0 for j in range(s))
-    theta = 1/(rho+1) * (sum(v[:rho]) - 1)
+    theta = 1/(rho+1) * (sum(v[:rho+1]) - 1)
     return np.maximum(z-theta,np.zeros(z.shape))
 
 def LAE(X,U):
@@ -48,6 +48,7 @@ def LAE(X,U):
                     z_seq = z
                     break
                 j += 1
+            old_delta_seq = delta_seq
             delta_seq = (1 + np.sqrt(1 + 4*delta_seq**2))/2
         Z[i,:] = z_seq
     return Z
@@ -55,4 +56,5 @@ def LAE(X,U):
 def find(X, nb_anchors):
   anchors, _ = kmeans_anchors.find(X, nb_anchors, 1)
   Z = LAE(X, anchors)
-  return anchors, Z
+  print(Z[:,:,0].shape)
+  return anchors, np.squeeze(Z)
