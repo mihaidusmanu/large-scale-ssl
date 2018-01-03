@@ -56,5 +56,4 @@ def LAE(X,U):
 def find(X, nb_anchors):
   anchors, _ = kmeans_anchors.find(X, nb_anchors, 1)
   Z = LAE(X, anchors)
-  print(Z[:,:,0].shape)
   return anchors, np.squeeze(Z)
