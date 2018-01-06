@@ -11,19 +11,18 @@ import util
 from two_moons import two_moons
 
 K = 2
+m = 10
+l = 10
+
 X, ground_truth = two_moons(1000, 1, 1e-2)
 
-#anchors, Z = random_anchors.find(X, 10, 1)
+#anchors, Z = random_anchors.find(X, m, 1)
+#anchors, Z = kmeans_anchors.find(X, m, 1)
+#anchors, Z = fuzzy_cmeans_anchors.find(X, m, 1.1)
+anchors, Z = LAE.find(X, m, 2)
 
-#anchors, Z = kmeans_anchors.find(X, 10, 1)
-
-#anchors, Z = fuzzy_cmeans_anchors.find(X, 10, 1.1)
-
-anchors, Z = LAE.find(X, 10, 2)
-
-num_labeled = 50
-labeled = np.random.choice(range(X.shape[0]), num_labeled, replace = False)
-Y = np.zeros((num_labeled, K))
+labeled = util.random_choice(l, K, ground_truth)
+Y = np.zeros((l, K))
 for id, real_id in enumerate(labeled):
     Y[id, ground_truth[real_id]] = 1
 
