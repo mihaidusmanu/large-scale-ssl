@@ -1,5 +1,6 @@
 import numpy as np
-import kmeans_anchors
+
+from sklearn.cluster import KMeans, MiniBatchKMeans
 
 from two_moons import two_moons
 
@@ -20,6 +21,7 @@ def LAE(X,U,s):
     Z = np.zeros((n,U.shape[0],1))
     eps = 1e-3
     for i in range(n):
+        #print(i)
         i_nn = knn(X[i,:],U,s)
         g = lambda z: np.linalg.norm(X[i,:] - np.dot(np.transpose(U[i_nn,:]),z))**2/2
         grad_g = lambda z: np.transpose((np.squeeze(np.dot(U[i_nn,:],np.dot(np.transpose(U[i_nn,:]),z))) - np.dot(U[i_nn,:],X[i,:]))[np.newaxis])
@@ -30,7 +32,7 @@ def LAE(X,U,s):
         delta_seq = 1
         beta_seq = 1
         t = 0
-        while t == 0 or np.linalg.norm(old_z_seq - z_seq) > eps:
+        while t == 0 or (np.linalg.norm(old_z_seq - z_seq) > eps and t < 10):
             t += 1
             alpha = (old_delta_seq - 1) / delta_seq
             v = z_seq + alpha*(z_seq - old_z_seq)
@@ -52,6 +54,8 @@ def LAE(X,U,s):
     return np.squeeze(Z)
 
 def find(X, nb_anchors, s):
-  anchors, _ = kmeans_anchors.find(X, nb_anchors, 1)
+  #kmeans = MiniBatchKMeans(n_clusters = nb_anchors, batch_size = 500).fit(X)
+  kmeans = KMeans(n_clusters = nb_anchors).fit(X)
+  anchors = kmeans.cluster_centers_
   Z = LAE(X, anchors, s)
   return anchors, Z
