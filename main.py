@@ -11,12 +11,12 @@ import util
 from two_moons import two_moons
 
 K = 2
-m = 10
-l = 10
+m = 100
+l = 100
 
 s = 3
 
-X, ground_truth = two_moons(1000, 1, 1e-2)
+X, ground_truth = two_moons(5000, 1, 1e-2)
 
 #anchors, Z = random_anchors.find(X, m, 1, s)
 #anchors, Z = kmeans_anchors.find(X, m, 1, s)
