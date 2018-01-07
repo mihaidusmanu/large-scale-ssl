@@ -21,18 +21,20 @@ def read_usps(file_path):
     return np.array(x), np.array(labels)
     
 K = 10
-m = 1000
+m = 100
 l = 100
+
+s = 3
 
 X, ground_truth = read_usps('data/zip.train')
 
 acc = 0
 
-for t in range(20):
-    #anchors, Z = random_anchors.find(X, m, 1)
-    anchors, Z = kmeans_anchors.find(X, m, 1)
-    #anchors, Z = fuzzy_cmeans_anchors.find(X, m, 1.1)
-    #anchors, Z = LAE.find(X, m, 2)
+for t in range(5):
+    #anchors, Z = random_anchors.find(X, m, 1, s)
+    #anchors, Z = kmeans_anchors.find(X, m, 1, s)
+    #anchors, Z = fuzzy_cmeans_anchors.find(X, m, 1.10)
+    anchors, Z = LAE.find(X, m, s)
     
     labeled = util.random_choice(l, K, ground_truth)
     Y = np.zeros((l, K))
@@ -46,4 +48,4 @@ for t in range(20):
     
     print("[Try #" + str(t) + "] " + str(current_acc))
 
-print("Average accuracy over 20 tries: " + str(acc / 20))
+print("Average accuracy over 5 tries: " + str(acc / 5))

@@ -14,12 +14,14 @@ K = 2
 m = 10
 l = 10
 
+s = 3
+
 X, ground_truth = two_moons(1000, 1, 1e-2)
 
-#anchors, Z = random_anchors.find(X, m, 1)
-#anchors, Z = kmeans_anchors.find(X, m, 1)
+#anchors, Z = random_anchors.find(X, m, 1, s)
+#anchors, Z = kmeans_anchors.find(X, m, 1, s)
 #anchors, Z = fuzzy_cmeans_anchors.find(X, m, 1.1)
-anchors, Z = LAE.find(X, m, 2)
+anchors, Z = LAE.find(X, m, s)
 
 labeled = util.random_choice(l, K, ground_truth)
 Y = np.zeros((l, K))
