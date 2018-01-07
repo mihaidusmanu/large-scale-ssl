@@ -54,8 +54,8 @@ def LAE(X,U,s):
     return np.squeeze(Z)
 
 def find(X, nb_anchors, s):
-  #kmeans = MiniBatchKMeans(n_clusters = nb_anchors, batch_size = 500).fit(X)
-  kmeans = KMeans(n_clusters = nb_anchors).fit(X)
+  kmeans = MiniBatchKMeans(n_clusters = nb_anchors, batch_size = 500).fit(X)
+  #kmeans = KMeans(n_clusters = nb_anchors).fit(X)
   anchors = kmeans.cluster_centers_
   Z = LAE(X, anchors, s)
   return anchors, Z

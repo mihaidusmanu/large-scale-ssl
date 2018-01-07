@@ -1,13 +1,14 @@
 import numpy as np
 import scipy.spatial
-from sklearn.cluster import KMeans
+from sklearn.cluster import KMeans, MiniBatchKMeans
 
 def gaussian_kernel(X, Y, sigma):
     sqdist = scipy.spatial.distance.cdist(X, Y, metric = 'sqeuclidean')
     return np.exp(- 1 / (2 * sigma**2) * sqdist)
 
 def find(X, nb_anchors, sigma, s):
-    kmeans = KMeans(n_clusters = nb_anchors).fit(X)
+    kmeans = MiniBatchKMeans(n_clusters = nb_anchors, batch_size = 500).fit(X)
+    #kmeans = KMeans(n_clusters = nb_anchors).fit(X)
     anchors = kmeans.cluster_centers_
     Z_full = gaussian_kernel(X, anchors, sigma)
     Z = np.zeros(Z_full.shape)

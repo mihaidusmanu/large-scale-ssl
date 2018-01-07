@@ -1,6 +1,6 @@
 import numpy as np
 import scipy.spatial
-from sklearn.cluster import KMeans
+from sklearn.cluster import KMeans, MiniBatchKMeans
 
 eps = 1e-4
 max_iter = 300
@@ -10,7 +10,8 @@ def find(X, nb_anchors, m):
     C = nb_anchors
 
     # K-Means initialization
-    kmeans = KMeans(n_clusters = C).fit(X)
+    kmeans = MiniBatchKMeans(n_clusters = C, batch_size = 500).fit(X)
+    #kmeans = KMeans(n_clusters = C).fit(X)
     centers = kmeans.cluster_centers_
     
     # Fuzzy C-Means
