@@ -21,7 +21,7 @@ def read_usps(file_path):
     return np.array(x), np.array(labels)
     
 K = 10
-m = 100
+m = 1000
 l = 100
 
 s = 3
@@ -31,8 +31,8 @@ X, ground_truth = read_usps('data/zip.train')
 acc = 0
 
 for t in range(5):
-    #anchors, Z = random_anchors.find(X, m, 1, s)
-    #anchors, Z = kmeans_anchors.find(X, m, 1, s)
+    #anchors, Z = random_anchors.find(X, m, 4, s)
+    #anchors, Z = kmeans_anchors.find(X, m, 4, s)
     #anchors, Z = fuzzy_cmeans_anchors.find(X, m, 1.10)
     anchors, Z = LAE.find(X, m, s)
     
