@@ -11,8 +11,8 @@ import util
 from two_moons import two_moons
 
 K = 2
-m = 50
-l = 50
+m = 15
+l = 15
 
 s = 3
 
