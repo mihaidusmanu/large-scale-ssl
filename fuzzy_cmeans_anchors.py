@@ -17,7 +17,7 @@ def find(X, nb_anchors, m):
     # Fuzzy C-Means
     it = 0
     while True:
-        inv_sqdist = 1 / scipy.spatial.distance.cdist(X, centers, metric = 'sqeuclidean')
+        inv_sqdist = 1 / (scipy.spatial.distance.cdist(X, centers, metric = 'sqeuclidean') + 1e-16)
         W = inv_sqdist ** (1 / (m - 1))
         W = W / np.transpose(np.sum(W, 1)[np.newaxis])
         
