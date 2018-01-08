@@ -21,7 +21,6 @@ def LAE(X,U,s):
     Z = np.zeros((n,U.shape[0],1))
     eps = 1e-3
     for i in range(n):
-        #print(i)
         i_nn = knn(X[i,:],U,s)
         g = lambda z: np.linalg.norm(X[i,:] - np.dot(np.transpose(U[i_nn,:]),z))**2/2
         grad_g = lambda z: np.transpose((np.squeeze(np.dot(U[i_nn,:],np.dot(np.transpose(U[i_nn,:]),z))) - np.dot(U[i_nn,:],X[i,:]))[np.newaxis])
